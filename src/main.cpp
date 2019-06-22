@@ -33,6 +33,10 @@ FtpServer ftpSrv;
 // #include <display2.h>
 WrapperOTA ota;
 
+// Reed Switch
+const int reedSwitch = D1;
+bool reedSwitchVal = false;
+bool reedSwitchVal_last = false;
 
 
 
@@ -255,11 +259,51 @@ void reconnect(void) {
 }
 
 
+void updateGPIOs(void){
+
+  reedSwitchVal = digitalRead(reedSwitch);
+
+  if (reedSwitchVal_last!=reedSwitchVal){
+    String base_topic_pub = "/" + config.mqtt.id_name + "/";
+    String topic_state_pub = base_topic_pub + "status";
+    String msg;
+    if (reedSwitchVal){
+      Serial.println("Reed switch --> Close");
+      msg ="false";
+    } else {
+      Serial.println("Reed switch --> Open");
+      msg ="true";
+    }
+
+    reedSwitchVal_last = reedSwitchVal;
+    mqttClient.publish(topic_state_pub.c_str(), msg.c_str());
+  }
+
+}
+
 void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
+  // Configure pins:
+  pinMode(reedSwitch, INPUT_PULLUP);
+
   reconnect();
+
+  // Send the first status:
+  reedSwitchVal = digitalRead(reedSwitch);
+  reedSwitchVal_last = reedSwitchVal;
+  String base_topic_pub = "/" + config.mqtt.id_name + "/";
+  String topic_state_pub = base_topic_pub + "status";
+  String msg;
+  if (reedSwitchVal){
+    Serial.println("Reed switch --> Close");
+    msg ="false";
+  } else {
+    Serial.println("Reed switch --> Open");
+    msg ="true";
+  }
+  mqttClient.publish(topic_state_pub.c_str(), msg.c_str());
 
   // Print some info:
   uint32_t realSize = ESP.getFlashChipRealSize();
@@ -297,6 +341,10 @@ void loop() {
   if (!mqttClient.connected())
     reconnectMQTT();
   mqttClient.loop();
+
+
+  // Update GPIOs:
+  updateGPIOs();
 
 
 

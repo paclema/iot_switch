@@ -35,7 +35,7 @@
     },
     "OTA": true,
     "deep_sleep": {
-      "enabled": true,
+      "enabled": false,
       "mode": "WAKE_RF_DEFAULT",
       "mode_options": [
         "WAKE_RF_DEFAULT",
