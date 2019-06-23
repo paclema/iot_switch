@@ -31,7 +31,7 @@ public:
     String ssid_password;
     String ip_address;
     String subnet;
-    String dns_Server;
+    String dns_server;
     String hostname;
 
 
@@ -74,7 +74,7 @@ public:
 
   struct Services {
     FTP ftp;
-    bool OTA;
+    bool ota;
     DeepSleep deep_sleep;
     LightSleep light_sleep;
   } services;

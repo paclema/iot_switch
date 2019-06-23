@@ -86,7 +86,7 @@ void WebConfigServer::parseConfig(const JsonDocument& doc){
     network.ssid_password = doc["network"]["ssid_password"] | "SSID_password";
     network.ip_address = doc["network"]["ip_address"] | "192.168.1.2";
     network.subnet = doc["network"]["subnet"] | "255.255.255.0";
-    network.dns_Server = doc["network"]["dns_Server"] | "192.168.1.1";
+    network.dns_server = doc["network"]["dns_server"] | "192.168.1.1";
     network.hostname = doc["network"]["hostname"] | "iotdevice.local";
 
 
@@ -112,11 +112,11 @@ void WebConfigServer::parseConfig(const JsonDocument& doc){
 
     // Services object:
     // FTP
-    services.ftp.enabled = doc["services"]["ftp"]["enabled"] | false;
-    services.ftp.user = doc["services"]["ftp"]["user"] | "admin";
-    services.ftp.password = doc["services"]["ftp"]["password"] | "admin";
+    services.ftp.enabled = doc["services"]["FTP"]["enabled"] | false;
+    services.ftp.user = doc["services"]["FTP"]["user"] | "admin";
+    services.ftp.password = doc["services"]["FTP"]["password"] | "admin";
     // OTA
-    services.OTA = doc["services"]["OTA"] | false;
+    services.ota = doc["services"]["OTA"] | false;
     // DeepSleep
     services.deep_sleep.enabled = doc["services"]["deep_sleep"]["enabled"] | false;
     services.deep_sleep.mode = doc["services"]["deep_sleep"]["mode"] | "WAKE_RF_DEFAULT";

@@ -65,7 +65,7 @@ void networkRestart(void){
 void enableServices(void){
   Serial.println("--- Services: ");
 
-  if (config.services.OTA){
+  if (config.services.ota){
     // ota.init(&display);
     ota.init(&config);
     Serial.println("   - OTA -> enabled");
@@ -337,7 +337,7 @@ void loop() {
   //   config.configureServer(&server);
   // }
 
-  if (config.services.OTA) ota.handle();
+  if (config.services.ota) ota.handle();
   if (config.services.ftp.enabled) ftpSrv.handleFTP();
   server.handleClient();
 
