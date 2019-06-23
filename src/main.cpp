@@ -268,15 +268,17 @@ void updateGPIOs(void){
     String topic_state_pub = base_topic_pub + "status";
     String msg;
     if (reedSwitchVal){
-      Serial.println("Reed switch --> Close");
-      msg ="false";
+      Serial.println("Reed switch --> Closed");
+      // msg ="false";
+      msg ="closed";
     } else {
       Serial.println("Reed switch --> Open");
-      msg ="true";
+      // msg ="true";
+      msg ="open";
     }
 
     reedSwitchVal_last = reedSwitchVal;
-    mqttClient.publish(topic_state_pub.c_str(), msg.c_str());
+    mqttClient.publish(topic_state_pub.c_str(), msg.c_str(), true);
   }
 
 }
@@ -297,11 +299,13 @@ void setup() {
   String topic_state_pub = base_topic_pub + "status";
   String msg;
   if (reedSwitchVal){
-    Serial.println("Reed switch --> Close");
-    msg ="false";
+    Serial.println("Reed switch --> Closed");
+    // msg ="false";
+    msg ="closed";
   } else {
     Serial.println("Reed switch --> Open");
-    msg ="true";
+    // msg ="true";
+    msg ="open";
   }
   mqttClient.publish(topic_state_pub.c_str(), msg.c_str());
 
